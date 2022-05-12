@@ -4,9 +4,14 @@
 #include <vlcpp/vlc.hpp>
 #include <vlcpp/MediaPlayer.hpp>
 
-const std::string cam_ip = "192.168.178.30";
-const std::string cam_port = "554";
+const std::string cam_ip = "192.168.178.30";    /**< Camera's IP address */
+const std::string cam_port = "554";             /**< Camera's RTSP server port */
 
+/**
+ * @brief print debug string if DEBUG flag is enabled
+ * 
+ * @param s string to be printed
+ */
 void debug_str(std::string s) {
     #ifdef DEBUG
     std::cout << s << std::endl;
