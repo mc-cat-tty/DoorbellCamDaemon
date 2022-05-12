@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++2a -Wall --pedantic
+CXXFLAGS = -std=c++2a -Wall --pedantic -DDEBUG -lvlc
 EXEC = dcd
 OBJ = main.o
 
