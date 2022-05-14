@@ -24,5 +24,5 @@ gendep:
 gendoc:
 	doxygen
 
-loadconfs:
+loadconf:
 	source params.conf
