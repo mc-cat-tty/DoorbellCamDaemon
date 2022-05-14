@@ -2,15 +2,17 @@ CXX = g++
 CXXFLAGS = -std=c++20 -Wall --pedantic -DDEBUG -I/usr/include/opencv4 -lfmt -lopencv_videoio -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_stitching
 EXEC = dcd
 OBJ = main.o
+SHELL := /bin/bash
 
 build: $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(EXEC)
 
 -include depedencies.txt
+-include params.conf
 
 .PHONY: run clean cleanall gendep gendoc loadconf
 run:
-	./$(EXEC) $CAM_IP $CAM_PORT $USER $PASS
+	./$(EXEC) ${CAM_IP} ${CAM_PORT} ${USER} ${PASS}
 
 clean:
 	rm -rf $(OBJ)
@@ -23,6 +25,3 @@ gendep:
 
 gendoc:
 	doxygen
-
-loadconf:
-	source params.conf
