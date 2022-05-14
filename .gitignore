@@ -1,3 +1,4 @@
 *.out
-dcd
 .vscode/*
+dcd
+params.conf
