@@ -20,3 +20,8 @@ make gendep && make
 make clean  # optional
 ./dcd CAMERA_IP_ADDRESS CAMERA_PORT MQTT_SERVER_ADDR MQTT_SERVER_PORT MQTT_TOPIC
 ```
+
+## Environment configuration
+ 1. Populate the file named _params.conf_
+ 2. Run `make loadconf` every time you change the file or a new shell is opened
+ 4. To execute the software use `make run` command
