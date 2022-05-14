@@ -8,7 +8,10 @@ build: $(OBJ)
 
 -include depedencies.txt
 
-.PHONY: clean cleanall gendep gendoc
+.PHONY: run clean cleanall gendep gendoc loadconf
+run:
+	./$(EXEC) $CAM_IP $CAM_PORT $USER $PASS
+
 clean:
 	rm -rf $(OBJ)
 
@@ -19,4 +22,7 @@ gendep:
 	$(CXX) -MM *.cpp > depedencies.txt
 
 gendoc:
-	doxygen 
+	doxygen
+
+loadconfs:
+	source params.conf
