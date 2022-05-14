@@ -6,8 +6,8 @@ You can find the other parts of the project at:
  - https://github.com/mc-cat-tty/DoorbellCamPhy
 
 ## Dependencies
- - libvlc
- - libvlcpp wrapper
+ - libfmt
+ - opencv
  - darknet
  - YOLOv5
 
