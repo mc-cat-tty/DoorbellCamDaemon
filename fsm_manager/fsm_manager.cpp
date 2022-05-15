@@ -2,15 +2,15 @@
 
 using namespace fsm;
 
-void FsmManager::setCallback(fsm_callback c) {
+inline void FsmManager::setCallback(fsm_callback c) {
     this->callback_function = c;
 }
 
-void FsmManager::updateState(State s) {
+inline void FsmManager::updateState(State s) {
     this->current_state = s;
 }
 
-State FsmManager::getState() {
+[[nodiscard]] inline State FsmManager::getState() const {
     return this->current_state;
 }
 

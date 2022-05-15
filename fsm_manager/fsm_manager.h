@@ -43,7 +43,7 @@ namespace fsm {
              * 
              * @return State current state
              */
-            State getState();
+            State getState() const;
 
             /**
              * @brief Toggle the fsm with person_in_frame as input
