@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['debug_5fstr_0',['debug_str',['../main_8cpp.html#acb3f63a730a2e2a87d34dfc45df1e6ae',1,'main.cpp']]]
+  ['debug_5fprint_0',['debug_print',['../main_8cpp.html#ad1e22add5387844783bd84477db2f4ee',1,'main.cpp']]]
 ];

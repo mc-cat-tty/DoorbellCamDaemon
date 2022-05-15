@@ -70,55 +70,54 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;vlcpp/vlc.hpp&gt;</code><br />
-<code>#include &lt;vlcpp/MediaPlayer.hpp&gt;</code><br />
+<code>#include &lt;fmt/core.h&gt;</code><br />
+<code>#include &lt;opencv2/opencv.hpp&gt;</code><br />
+<code>#include &quot;<a class="el" href="fsm__manager_8h_source.html">fsm_manager/fsm_manager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="states_8h_source.html">fsm_manager/states.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acb3f63a730a2e2a87d34dfc45df1e6ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#acb3f63a730a2e2a87d34dfc45df1e6ae">debug_str</a> (std::string s)</td></tr>
-<tr class="memdesc:acb3f63a730a2e2a87d34dfc45df1e6ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">print debug string if DEBUG flag is enabled  <a href="main_8cpp.html#acb3f63a730a2e2a87d34dfc45df1e6ae">More...</a><br /></td></tr>
-<tr class="separator:acb3f63a730a2e2a87d34dfc45df1e6ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
-<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1e22add5387844783bd84477db2f4ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad1e22add5387844783bd84477db2f4ee">debug_print</a> (const char *str)</td></tr>
+<tr class="memdesc:ad1e22add5387844783bd84477db2f4ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print debug string if DEBUG macro is defined.  <a href="main_8cpp.html#ad1e22add5387844783bd84477db2f4ee">More...</a><br /></td></tr>
+<tr class="separator:ad1e22add5387844783bd84477db2f4ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0f2228420376f4db7e1274f2b41667c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c">main</a> (int argc, const char *argv[])</td></tr>
+<tr class="separator:ac0f2228420376f4db7e1274f2b41667c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a88b89265fca30214aa3f5542f95e0258"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a88b89265fca30214aa3f5542f95e0258">cam_ip</a> = &quot;192.168.178.30&quot;</td></tr>
-<tr class="memdesc:a88b89265fca30214aa3f5542f95e0258"><td class="mdescLeft">&#160;</td><td class="mdescRight">Camera's IP address.  <a href="main_8cpp.html#a88b89265fca30214aa3f5542f95e0258">More...</a><br /></td></tr>
-<tr class="separator:a88b89265fca30214aa3f5542f95e0258"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa319acfa26826ad02b2d5f1ab3ae8e57"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa319acfa26826ad02b2d5f1ab3ae8e57">cam_port</a> = &quot;554&quot;</td></tr>
-<tr class="memdesc:aa319acfa26826ad02b2d5f1ab3ae8e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Camera's RTSP server port.  <a href="main_8cpp.html#aa319acfa26826ad02b2d5f1ab3ae8e57">More...</a><br /></td></tr>
-<tr class="separator:aa319acfa26826ad02b2d5f1ab3ae8e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3db42312c32cb173c5626ee1a7b1539"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad3db42312c32cb173c5626ee1a7b1539">min_argc_num</a> = 5</td></tr>
+<tr class="memdesc:ad3db42312c32cb173c5626ee1a7b1539"><td class="mdescLeft">&#160;</td><td class="mdescRight">minimum number of arguments that must be passed to the program  <a href="main_8cpp.html#ad3db42312c32cb173c5626ee1a7b1539">More...</a><br /></td></tr>
+<tr class="separator:ad3db42312c32cb173c5626ee1a7b1539"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="acb3f63a730a2e2a87d34dfc45df1e6ae" name="acb3f63a730a2e2a87d34dfc45df1e6ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb3f63a730a2e2a87d34dfc45df1e6ae">&#9670;&nbsp;</a></span>debug_str()</h2>
+<a id="ad1e22add5387844783bd84477db2f4ee" name="ad1e22add5387844783bd84477db2f4ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1e22add5387844783bd84477db2f4ee">&#9670;&nbsp;</a></span>debug_print()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void debug_str </td>
+          <td class="memname">void debug_print </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>print debug string if DEBUG flag is enabled </p>
+<p>Print debug string if DEBUG macro is defined. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>string to be printed </td></tr>
+    <tr><td class="paramname">str</td><td>String to be printed </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&nbsp;</a></span>main()</h2>
+<a id="ac0f2228420376f4db7e1274f2b41667c" name="ac0f2228420376f4db7e1274f2b41667c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0f2228420376f4db7e1274f2b41667c">&#9670;&nbsp;</a></span>main()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,8 +125,19 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int main </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -135,35 +145,19 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a88b89265fca30214aa3f5542f95e0258" name="a88b89265fca30214aa3f5542f95e0258"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88b89265fca30214aa3f5542f95e0258">&#9670;&nbsp;</a></span>cam_ip</h2>
+<a id="ad3db42312c32cb173c5626ee1a7b1539" name="ad3db42312c32cb173c5626ee1a7b1539"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3db42312c32cb173c5626ee1a7b1539">&#9670;&nbsp;</a></span>min_argc_num</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string cam_ip = &quot;192.168.178.30&quot;</td>
+          <td class="memname">const int min_argc_num = 5</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Camera's IP address. </p>
-
-</div>
-</div>
-<a id="aa319acfa26826ad02b2d5f1ab3ae8e57" name="aa319acfa26826ad02b2d5f1ab3ae8e57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa319acfa26826ad02b2d5f1ab3ae8e57">&#9670;&nbsp;</a></span>cam_port</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string cam_port = &quot;554&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Camera's RTSP server port. </p>
+<p>minimum number of arguments that must be passed to the program </p>
 
 </div>
 </div>

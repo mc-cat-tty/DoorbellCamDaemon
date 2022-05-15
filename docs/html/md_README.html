@@ -73,8 +73,8 @@ $(function() {
 <h1><a class="anchor" id="autotoc_md1"></a>
 Dependencies</h1>
 <ul>
-<li>libvlc</li>
-<li>libvlcpp wrapper</li>
+<li>libfmt</li>
+<li>opencv</li>
 <li>darknet</li>
 <li>YOLOv5</li>
 </ul>
@@ -86,7 +86,13 @@ How to build</h1>
 <div class="fragment"><div class="line">make gendep &amp;&amp; make</div>
 <div class="line">make clean  # optional</div>
 <div class="line">./dcd CAMERA_IP_ADDRESS CAMERA_PORT MQTT_SERVER_ADDR MQTT_SERVER_PORT MQTT_TOPIC</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+Environment configuration</h1>
+<ol type="1">
+<li>Populate the file named <em>params.conf</em></li>
+<li>To execute the software use <code>make run</code> command </li>
+</ol>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

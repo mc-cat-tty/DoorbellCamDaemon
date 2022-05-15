@@ -4,13 +4,15 @@
 
 #include <opencv2/opencv.hpp>
 
+#include "fsm_manager/fsm_manager.h"
+#include "fsm_manager/states.h"
 
 const int min_argc_num = 5;  /**< minimum number of arguments that must be passed to the program */
 
 /**
- * @brief print debug string if DEBUG macro is defined
+ * @brief Print debug string if DEBUG macro is defined
  * 
- * @param str string to be printed
+ * @param str String to be printed
  */
 void debug_print(const char *str) {
     #ifdef DEBUG
@@ -45,8 +47,6 @@ int main(int argc, const char* argv[]) {
     }
     debug_print("Video stream opened");
     
-    // TODO: open RTSP connection
-    // TODO: initialize FSM
     // TODO: get frames
     // TODO: pass frames through YOLO
     // TODO: match bounding boxes

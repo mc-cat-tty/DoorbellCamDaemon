@@ -1,1 +1,1 @@
-main.o: main.cpp
+main.o: main.cpp fsm_manager/fsm_manager.h fsm_manager/states.h
