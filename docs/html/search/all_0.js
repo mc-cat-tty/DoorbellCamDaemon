@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['debug_5fprint_0',['debug_print',['../main_8cpp.html#ad1e22add5387844783bd84477db2f4ee',1,'main.cpp']]],
-  ['doorbellcamdaemon_1',['DoorbellCamDaemon',['../md_README.html',1,'']]]
+  ['box_0',['box',['../structobjdet_1_1Detection.html#af597214ff9b1ec18bd073c90dd24c14c',1,'objdet::Detection']]]
 ];

@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['waiting_5fperson_0',['WAITING_PERSON',['../namespacefsm.html#ae4d586c601aff4bb6f076619a35430eda53c57181481f56b0ebd71d26a93350bd',1,'fsm']]]
+  ['objdet_0',['objdet',['../namespaceobjdet.html',1,'']]],
+  ['object_5fdetection_2ecpp_1',['object_detection.cpp',['../object__detection_8cpp.html',1,'']]],
+  ['object_5fdetection_2eh_2',['object_detection.h',['../object__detection_8h.html',1,'']]],
+  ['object_5fdetection_2eipp_3',['object_detection.ipp',['../object__detection_8ipp.html',1,'']]],
+  ['objectdetector_4',['ObjectDetector',['../classobjdet_1_1ObjectDetector.html',1,'objdet::ObjectDetector'],['../classobjdet_1_1ObjectDetector.html#ab81e201f8f531266ef052537fabf9687',1,'objdet::ObjectDetector::ObjectDetector(ObjectDetector &amp;od)=default'],['../classobjdet_1_1ObjectDetector.html#aca34a483621b0bad9d31dc3f7f325b67',1,'objdet::ObjectDetector::ObjectDetector(const cv::dnn::Net &amp;n)']]]
 ];

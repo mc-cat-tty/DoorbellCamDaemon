@@ -6,6 +6,10 @@ inline void FsmManager::setCallback(fsm_callback c) {
     this->callback_function = c;
 }
 
+inline void FsmManager::setFrmNum(unsigned int num) {
+    this->min_frm_count = num;
+}
+
 inline void FsmManager::updateState(State s) {
     this->current_state = s;
 }

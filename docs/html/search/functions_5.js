@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['setcallback_0',['setCallback',['../classfsm_1_1FsmManager.html#a5ddb4f34e11af1fa6e6eadda07835b43',1,'fsm::FsmManager']]]
+  ['objectdetector_0',['ObjectDetector',['../classobjdet_1_1ObjectDetector.html#ab81e201f8f531266ef052537fabf9687',1,'objdet::ObjectDetector::ObjectDetector(ObjectDetector &amp;od)=default'],['../classobjdet_1_1ObjectDetector.html#aca34a483621b0bad9d31dc3f7f325b67',1,'objdet::ObjectDetector::ObjectDetector(const cv::dnn::Net &amp;n)']]]
 ];

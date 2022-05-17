@@ -6,6 +6,9 @@
 
 #include "fsm_manager/fsm_manager.h"
 #include "fsm_manager/states.h"
+#include "object_detection/object_detection.h"
+
+#define EVER ;;
 
 const int min_argc_num = 5;  /**< minimum number of arguments that must be passed to the program */
 
@@ -47,7 +50,28 @@ int main(int argc, const char* argv[]) {
     }
     debug_print("Video stream opened");
     
-    // TODO: get frames
+    cv::Mat image;
+    const auto net = cv::dnn::readNet("yolov5s.onnx");  // loading YOLOv5 model
+    auto detector = objdet::ObjectDetector(net);
+    detector.setNet(net);
+    std::vector<objdet::Detection> det_res;
+    for (EVER) {
+        if (!camera.read(image)) {
+            std::cerr << "Error while reading frame" << std::endl;
+            #ifdef DEBUG
+            cv::waitKey();
+            #endif
+            continue;
+        }
+
+        det_res = detector.detect(image);
+        
+        #ifdef DEBUG
+        cv::imshow(mrl, image);
+        if (cv::waitKey(1) >= 0) break;
+        #endif
+    }
+
     // TODO: pass frames through YOLO
     // TODO: match bounding boxes
     // TODO: update FSM

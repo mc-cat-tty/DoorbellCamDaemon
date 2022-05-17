@@ -32,6 +32,13 @@ namespace fsm {
             void setCallback(fsm_callback c);
 
             /**
+             * @brief Set the min_frm_count to num
+             * 
+             * @param num New value of min_frm_count
+             */
+            void setFrmNum(unsigned int num);
+
+            /**
              * @brief Force fsm's state update
              * 
              * @param s New value for current_state
