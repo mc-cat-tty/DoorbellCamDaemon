@@ -70,9 +70,11 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;fmt/core.h&gt;</code><br />
 <code>#include &lt;opencv2/opencv.hpp&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="fsm__manager_8h_source.html">fsm_manager/fsm_manager.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="states_8h_source.html">fsm_manager/states.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="object__detection_8h_source.html">object_detection/object_detection.h</a>&quot;</code><br />
@@ -95,6 +97,12 @@ Variables</h2></td></tr>
 <tr class="memitem:ad3db42312c32cb173c5626ee1a7b1539"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad3db42312c32cb173c5626ee1a7b1539">min_argc_num</a> = 5</td></tr>
 <tr class="memdesc:ad3db42312c32cb173c5626ee1a7b1539"><td class="mdescLeft">&#160;</td><td class="mdescRight">minimum number of arguments that must be passed to the program  <a href="main_8cpp.html#ad3db42312c32cb173c5626ee1a7b1539">More...</a><br /></td></tr>
 <tr class="separator:ad3db42312c32cb173c5626ee1a7b1539"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7304a9832110e440e27e7390884a269"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad7304a9832110e440e27e7390884a269">YOLO_MODEL_PATH</a> = &quot;config_files/yolov5m6.onnx&quot;</td></tr>
+<tr class="memdesc:ad7304a9832110e440e27e7390884a269"><td class="mdescLeft">&#160;</td><td class="mdescRight">path of yolov5m6.onnx file  <a href="main_8cpp.html#ad7304a9832110e440e27e7390884a269">More...</a><br /></td></tr>
+<tr class="separator:ad7304a9832110e440e27e7390884a269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00650ce5c3f946e185cbd397ab19cee8"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a00650ce5c3f946e185cbd397ab19cee8">CLASS_NAMES_PATH</a> = &quot;config_files/classes.txt&quot;</td></tr>
+<tr class="memdesc:a00650ce5c3f946e185cbd397ab19cee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">path of classes.txt file  <a href="main_8cpp.html#a00650ce5c3f946e185cbd397ab19cee8">More...</a><br /></td></tr>
+<tr class="separator:a00650ce5c3f946e185cbd397ab19cee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a2b912ed39df233b43d7a093814705afb" name="a2b912ed39df233b43d7a093814705afb"></a>
@@ -167,6 +175,22 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a00650ce5c3f946e185cbd397ab19cee8" name="a00650ce5c3f946e185cbd397ab19cee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00650ce5c3f946e185cbd397ab19cee8">&#9670;&nbsp;</a></span>CLASS_NAMES_PATH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* CLASS_NAMES_PATH = &quot;config_files/classes.txt&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>path of classes.txt file </p>
+
+</div>
+</div>
 <a id="ad3db42312c32cb173c5626ee1a7b1539" name="ad3db42312c32cb173c5626ee1a7b1539"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad3db42312c32cb173c5626ee1a7b1539">&#9670;&nbsp;</a></span>min_argc_num</h2>
 
@@ -180,6 +204,22 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>minimum number of arguments that must be passed to the program </p>
+
+</div>
+</div>
+<a id="ad7304a9832110e440e27e7390884a269" name="ad7304a9832110e440e27e7390884a269"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7304a9832110e440e27e7390884a269">&#9670;&nbsp;</a></span>YOLO_MODEL_PATH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* YOLO_MODEL_PATH = &quot;config_files/yolov5m6.onnx&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>path of yolov5m6.onnx file </p>
 
 </div>
 </div>
