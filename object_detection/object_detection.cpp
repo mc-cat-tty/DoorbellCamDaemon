@@ -1,7 +1,6 @@
 #include "object_detection.h"
 
 #include <algorithm>
-#include <iostream>  // TODO: remove
 
 using namespace objdet;
 
@@ -10,31 +9,29 @@ using namespace objdet;
 #include "object_detection.ipp"
 #endif
 
-static const int YOLO_WIDTH = 640;
-static const int YOLO_HEIGHT = 640;
-static const float YOLO_WIDTH_F = 640.;
-static const float YOLO_HEIGHT_F = 640.;
+static const float YOLO_WIDTH = 640.;
+static const float YOLO_HEIGHT = 640.;
+static const float CONFIDENCE_THRESHOLD = .4;
+static const float SCORE_THRESHOLD = .2;
+static const float NMS_THRESHOLD = .4;
 
 [[nodiscard]] cv::Mat ObjectDetector::format_for_yolo5(const cv::Mat &source) const {
-    std::cout << "format" << std::endl;
     int rows = source.rows;
     int cols = source.cols;
     int max_dim = std::max(rows, cols);
-    auto resized = cv::Mat::zeros(max_dim, max_dim, CV_8UC3);
-    cv::Mat roi = resized(cv::Rect(0, 0, cols, rows));
-    source.copyTo(roi);
+    cv::Mat resized = cv::Mat::zeros(max_dim, max_dim, CV_8UC3);
+    source.copyTo(resized(cv::Rect(0, 0, cols, rows)));
 
     cv::Mat res;
-    cv::dnn::blobFromImage(source, res, 1.0/255, cv::Size(YOLO_WIDTH, YOLO_HEIGHT), cv::Scalar(), true, false);
+    cv::dnn::blobFromImage(resized, res, 1./255., cv::Size(YOLO_WIDTH, YOLO_HEIGHT), cv::Scalar(), true, false);
     return res;
 }
 
-[[nodiscard]] std::tuple<std::vector<int>, std::vector<float>, std::vector<cv::Rect>> ObjectDetector::unwrap_yolo5_result(const cv::Mat &img, const std::vector<cv::Mat> &predictions, float score_threshold) const {
-    std::cout << "unwrap_yolo5_result" << std::endl;
-    const float x_factor = img.cols / YOLO_WIDTH_F;
-    const float y_factor = img.rows / YOLO_HEIGHT_F;
+[[nodiscard]] std::tuple<std::vector<int>, std::vector<float>, std::vector<cv::Rect>> ObjectDetector::unwrap_yolo5_result(const cv::Mat &img, const std::vector<cv::Mat> &predictions, const std::vector<std::string> &classes, float confidence_threshold, float score_threshold) const {
+    const float x_factor = img.cols / YOLO_WIDTH;
+    const float y_factor = img.rows / YOLO_HEIGHT;
     float *data = (float*) predictions[0].data;
-    const int dimentions = 85;
+    const int dimensions = 85;
     const int rows = 25200;
     
     std::vector<int> ids;
@@ -42,9 +39,9 @@ static const float YOLO_HEIGHT_F = 640.;
     std::vector<cv::Rect> boxes;
     for (int i=0; i<rows; i++) {
         float confidence = data[4];
-        if (confidence >= .4) {
+        if (confidence >= confidence_threshold) {
             float *classes_scores = data+5;
-            cv::Mat scores(1, ids.size(), CV_32FC1, classes_scores);
+            cv::Mat scores(1, classes.size(), CV_32FC1, classes_scores);
             cv::Point class_id;
             double max_class_score;
             minMaxLoc(scores, 0, &max_class_score, 0, &class_id);
@@ -64,34 +61,29 @@ static const float YOLO_HEIGHT_F = 640.;
             }
         }
 
-        data += dimentions;
+        data += dimensions;
     }
 
     return {ids, confidences, boxes};
 }
 
 [[nodiscard]] std::vector<int> ObjectDetector::filter_bounding_boxes(const std::vector<cv::Rect> &boxes, const std::vector<float> &confidences, float score_threshold, float nms_threshold) const {
-    std::cout << "filter bounding boxes" << std::endl;
     std::vector<int> result;
     cv::dnn::NMSBoxes(boxes, confidences, score_threshold, nms_threshold, result);
     return result;
 }
 
 [[nodiscard]] std::vector<Detection> ObjectDetector::detect(const cv::Mat &frame) const {
-    std::cout << "detect" << std::endl;
     auto square_blob = format_for_yolo5(frame);
-    std::cout << "return format" << std::endl;
 
     std::vector<cv::Mat> predictions;
     auto net_copy = this->net;
     net_copy.setInput(square_blob);
-    std::cout << "forwarding" << std::endl;
     net_copy.forward(predictions, net_copy.getUnconnectedOutLayersNames());
-    std::cout << "forwarded" << std::endl;
 
-    auto [class_ids, confidences, bounding_boxes] = unwrap_yolo5_result(frame, predictions, .25);
+    auto [class_ids, confidences, bounding_boxes] = unwrap_yolo5_result(frame, predictions, class_names, CONFIDENCE_THRESHOLD, SCORE_THRESHOLD);
 
-    auto filtered_boxes_idx = filter_bounding_boxes(bounding_boxes, confidences, .25, .45);
+    auto filtered_boxes_idx = filter_bounding_boxes(bounding_boxes, confidences, SCORE_THRESHOLD, NMS_THRESHOLD);
 
     std::vector<Detection> output;
     for (int i=0; i<filtered_boxes_idx.size(); i++) {

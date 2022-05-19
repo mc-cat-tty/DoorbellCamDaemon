@@ -1,8 +1,10 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <fmt/core.h>
 
 #include <opencv2/opencv.hpp>
+#include <unistd.h>
 
 #include "fsm_manager/fsm_manager.h"
 #include "fsm_manager/states.h"
@@ -11,6 +13,8 @@
 #define EVER ;;
 
 const int min_argc_num = 5;  /**< minimum number of arguments that must be passed to the program */
+const char* YOLO_MODEL_PATH = "config_files/yolov5m6.onnx";  /**< path of yolov5m6.onnx file */
+const char* CLASS_NAMES_PATH = "config_files/classes.txt";  /**< path of classes.txt file */
 
 /**
  * @brief Print debug string if DEBUG macro is defined
@@ -24,6 +28,7 @@ void debug_print(const char *str) {
 }
 
 int main(int argc, const char* argv[]) {
+    #ifndef TESTING
     if (argc < min_argc_num) {
         std::cerr << "Wrong arguments" << std::endl;
         std::cerr << "Usage: " << argv[0] << " CAM_IP CAM_PORT USERNAME PASSWORD" << std::endl;
@@ -40,25 +45,47 @@ int main(int argc, const char* argv[]) {
     debug_print(username);
     debug_print(password);
 
-    const std::string mrl = fmt::format("rtsp://{}:{}@{}:{}/h.265", username, password, cam_ip, cam_port);
+    const std::string mrl = fmt::format("rtsp://{}:{}@{}:{} !max-buffers=1 !drop=true", username, password, cam_ip, cam_port);
     debug_print(mrl.c_str());
-
-    cv::VideoCapture camera(mrl);
-    if (!camera.open(mrl)) {
-        std::cerr << "Error while opening network video stream" << std::endl;
-        return 2;
+    #else
+    if (argc < 2) {
+        std::cerr << "Wrong number of arguments" << std::endl;
+        return 1;
     }
-    debug_print("Video stream opened");
-    
+    const std::string mrl(argv[1]); 
+    #endif
+
+    std::vector<std::string> class_names;
+    std::ifstream in(CLASS_NAMES_PATH);
+    if (!in) {
+        std::cerr << "Errore while opening class names file" << std::endl;
+        return 3;
+    }
+    std::string line;
+    while (getline(in, line)) {
+        class_names.push_back(line);
+    }
+    debug_print("class_names loaded");
+
     cv::Mat image;
-    auto net = cv::dnn::readNet("yolov5s.onnx");  // loading YOLOv5 model
-    auto detector = objdet::ObjectDetector(net);
+    auto net = cv::dnn::readNet(YOLO_MODEL_PATH);  // loading YOLOv5 model
+    auto detector = objdet::ObjectDetector(net, class_names);
     std::vector<objdet::Detection> det_res;
     for (EVER) {
+        cv::VideoCapture camera(mrl);
+        camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
+        if (!camera.open(mrl)) {
+            std::cerr << "Error while opening network video stream" << std::endl;
+            return 2;
+        }
+        debug_print("Video stream opened");
+        
         if (!camera.read(image)) {
             std::cerr << "Error while reading frame" << std::endl;
             #ifdef DEBUG
-            cv::waitKey();
+            if (cv::waitKey(1) >= 0) break;
+            #else
+            sleep(1);
             #endif
             continue;
         }
@@ -66,18 +93,19 @@ int main(int argc, const char* argv[]) {
         det_res = detector.detect(image);
         
         #ifdef DEBUG
-        std::cout << det_res.size() << std::endl;
         for (const objdet::Detection &d : det_res) {
             cv::rectangle(image, d.box, cv::Scalar(255, 0, 0), 1, 8, 0);
+            std::cout << class_names[d.class_id] << " ";
         }
+        std::cout << std::endl;
 
         cv::imshow(mrl, image);
         if (cv::waitKey(1) >= 0) break;
+        #else
+        usleep(500*1000);
         #endif
     }
 
-    // TODO: pass frames through YOLO
-    // TODO: match bounding boxes
     // TODO: update FSM
     // TODO: send MQTT message (with callback?)
     

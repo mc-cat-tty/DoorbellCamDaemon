@@ -16,6 +16,7 @@ namespace objdet {
     class ObjectDetector {
         private:
             cv::dnn::Net net;  /**< neural network */
+            std::vector<std::string> class_names;  /**< vector of class names */
 
             /**
              * @brief Format source frame for YOLOv5 network
@@ -30,10 +31,12 @@ namespace objdet {
              * 
              * @param img input frame
              * @param predictions input predictions vector
-             * @param score_threshold intput confidence threshold
+             * @param classes vector of class names
+             * @param confidence_threshold input confidence threshold
+             * @param score_threshold intput score threshold
              * @return std::tuple<std::vector<int>, std::vector<float>, std::vector<cv::Rect>> 
              */
-            std::tuple<std::vector<int>, std::vector<float>, std::vector<cv::Rect>> unwrap_yolo5_result(const cv::Mat &img, const std::vector<cv::Mat> &predictions, float score_threshold) const;
+            std::tuple<std::vector<int>, std::vector<float>, std::vector<cv::Rect>> unwrap_yolo5_result(const cv::Mat &img, const std::vector<cv::Mat> &predictions, const std::vector<std::string> &classes, float confidence_theshold, float score_threshold) const;
 
             /**
              * @brief Filter bounding boxes that come from the YOLO net and keep non overlapping ones
@@ -53,7 +56,7 @@ namespace objdet {
              * 
              * @param n neural network to be used for detection
              */
-            ObjectDetector(const cv::dnn::Net &n) : net(n) {};
+            ObjectDetector(const cv::dnn::Net &n, const std::vector<std::string> &classes) : net(n), class_names(classes) {};
 
             /**
              * @brief Set net attribute to n
