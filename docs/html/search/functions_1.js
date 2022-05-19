@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['fsmmanager_0',['FsmManager',['../classfsm_1_1FsmManager.html#a5cf19d01dad0b85f1568c5b2367ca32f',1,'fsm::FsmManager::FsmManager(FsmManager &amp;fm)=default'],['../classfsm_1_1FsmManager.html#ac4546f5ff76aa2a46d906939b42dfd52',1,'fsm::FsmManager::FsmManager(fsm_callback callback, unsigned int frm_num, State start_state=State::WAITING_PERSON)']]]
+  ['debug_5fprint_0',['debug_print',['../main_8cpp.html#ad1e22add5387844783bd84477db2f4ee',1,'main.cpp']]],
+  ['detect_1',['detect',['../classobjdet_1_1ObjectDetector.html#ad3b0ae207fd183b6d66b52da108fac11',1,'objdet::ObjectDetector']]]
 ];

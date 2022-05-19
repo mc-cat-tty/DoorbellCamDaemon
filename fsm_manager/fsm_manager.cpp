@@ -1,43 +1,35 @@
 #include "fsm_manager.h"
 
+#include <iostream>
+
 using namespace fsm;
 
-inline void FsmManager::setCallback(fsm_callback c) {
-    this->callback_function = c;
-}
-
-inline void FsmManager::setFrmNum(unsigned int num) {
-    this->min_frm_count = num;
-}
-
-inline void FsmManager::updateState(State s) {
-    this->current_state = s;
-}
-
-[[nodiscard]] inline State FsmManager::getState() const {
-    return this->current_state;
-}
+#ifndef INLINE_ENABLED
+#define INLINE
+#include "fsm_manager.ipp"
+#endif
 
 State FsmManager::nextState(bool person_in_frame) {
     State old_state = this->current_state;
 
     switch (current_state) {
         case State::WAITING_PERSON:
-            this->person_detected_count = 0;
+            this->person_detected_sec = time(NULL);
             if (person_in_frame)
                 this->current_state = State::PERSON_DETECTED;
             // else stay in WAITING_PERSON state
             break;
         case State::PERSON_DETECTED:
-            this->person_detected_count++;
-            if (person_in_frame && person_detected_count >= min_frm_count)
+            std::cout << time(NULL)-person_detected_sec << std::endl;
+            if (person_in_frame && time(NULL)-person_detected_sec >= min_sec)
                 this->current_state = State::PERSON_STILL;
             else if (!person_in_frame)
                 this->current_state = State::WAITING_PERSON;
+            // else stay in PERSON_DETECTED
             break;
         case State::PERSON_STILL:
             if (person_in_frame)
-                this->current_state = State::PERSON_DETECTED;
+                this->current_state = State::PERSON_STILL;
             else
                 this->current_state = State::WAITING_PERSON;
             break;

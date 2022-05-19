@@ -27,6 +27,22 @@ void debug_print(const char *str) {
     #endif
 }
 
+void callback(fsm::State s) {    
+    switch (s) {
+        case fsm::State::WAITING_PERSON:
+            debug_print("WAITING_PERSON");
+            break;
+        case fsm::State::PERSON_DETECTED:
+            debug_print("PERSON_DETECTED");
+            break;
+        case fsm::State::PERSON_STILL:
+            debug_print("PERSON_STILL");
+            break;
+        default:
+            debug_print("UNKNOWN");
+    }
+}
+
 int main(int argc, const char* argv[]) {
     #ifndef TESTING
     if (argc < min_argc_num) {
@@ -70,6 +86,7 @@ int main(int argc, const char* argv[]) {
     cv::Mat image;
     auto net = cv::dnn::readNet(YOLO_MODEL_PATH);  // loading YOLOv5 model
     auto detector = objdet::ObjectDetector(net, class_names);
+    auto fsm_manager = fsm::FsmManager(callback, 10);
     std::vector<objdet::Detection> det_res;
     for (EVER) {
         cv::VideoCapture camera(mrl);
@@ -79,7 +96,7 @@ int main(int argc, const char* argv[]) {
             return 2;
         }
         debug_print("Video stream opened");
-        
+
         if (!camera.read(image)) {
             std::cerr << "Error while reading frame" << std::endl;
             #ifdef DEBUG
@@ -91,19 +108,26 @@ int main(int argc, const char* argv[]) {
         }
 
         det_res = detector.detect(image);
+        bool person_in_frame = false;
+        for (const objdet::Detection &d : det_res) {
+            if (class_names[d.class_id] == "person")
+                person_in_frame = true;
+        }
+        fsm_manager.nextState(person_in_frame);
         
         #ifdef DEBUG
         for (const objdet::Detection &d : det_res) {
             cv::rectangle(image, d.box, cv::Scalar(255, 0, 0), 1, 8, 0);
-            std::cout << class_names[d.class_id] << " ";
+            putText(image, class_names[d.class_id], cv::Point(d.box.x, d.box.y-10), cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255, 0, 0), 1.2);
         }
-        std::cout << std::endl;
 
         cv::imshow(mrl, image);
         if (cv::waitKey(1) >= 0) break;
         #else
         usleep(500*1000);
         #endif
+
+        camera.release();
     }
 
     // TODO: update FSM

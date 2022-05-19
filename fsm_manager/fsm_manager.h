@@ -1,5 +1,7 @@
 #pragma once
 
+#include <time.h>
+
 #include "states.h"
 
 namespace fsm {
@@ -9,8 +11,8 @@ namespace fsm {
         private:
             State current_state;  /**< current state of the finite state machine */
             fsm_callback callback_function;  /**< callback_function is called every time the state of the fms changes */
-            unsigned int person_detected_count = 0;  /**< counts the number of frames in which there is a person */
-            unsigned int min_frm_count;  /**< if person_detected_count is over this threshold, fms moves to PERSON_STILL state */
+            time_t person_detected_sec;  /**< number of seconds in which there is a person in camera's fov */
+            unsigned int min_sec;  /**< if person_detected_sec is over this threshold, fms moves to PERSON_STILL state */
         public:
             FsmManager(FsmManager &fm) = default;
             
@@ -21,8 +23,10 @@ namespace fsm {
              * @param frm_num Minimum number of frames to consider a the subject still in front of the door
              * @param start_state Starting state of the finite state machine
              */
-            FsmManager(fsm_callback callback, unsigned int frm_num, State start_state = State::WAITING_PERSON)
-                : callback_function(callback), min_frm_count(frm_num), current_state(start_state) {};
+            FsmManager(fsm_callback callback, unsigned int sec, State start_state = State::WAITING_PERSON)
+                : callback_function(callback), min_sec(sec), current_state(start_state) {
+                    callback_function(this->current_state);
+                };
             
             /**
              * @brief Set callback_function to c
@@ -32,11 +36,11 @@ namespace fsm {
             void setCallback(fsm_callback c);
 
             /**
-             * @brief Set the min_frm_count to num
+             * @brief Set min_sec to set
              * 
-             * @param num New value of min_frm_count
+             * @param num New value of min_sec attribute
              */
-            void setFrmNum(unsigned int num);
+            void setMinSec(unsigned int sec);
 
             /**
              * @brief Force fsm's state update
@@ -61,3 +65,8 @@ namespace fsm {
             State nextState(bool person_in_frame);
     };
 }
+
+#ifdef INLINE_ENABLED  // inline guard macro
+#define INLINE inline
+#include "fsm_manager.ipp"
+#endif
