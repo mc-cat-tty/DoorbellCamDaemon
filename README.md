@@ -14,13 +14,13 @@ You can find the other parts of the project at:
 ## Container
 TODO
 
+## Environment configuration
+ 1. Populate the file named _params.conf_
+ 4. To execute the software use `make run` command
+
 ## How to build
 ```bash
 make gendep && make
 make clean  # optional
-./dcd CAMERA_IP_ADDRESS CAMERA_PORT MQTT_SERVER_ADDR MQTT_SERVER_PORT MQTT_TOPIC
+make run
 ```
-
-## Environment configuration
- 1. Populate the file named _params.conf_
- 4. To execute the software use `make run` command
