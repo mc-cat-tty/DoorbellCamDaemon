@@ -51,9 +51,8 @@ int main(int argc, const char* argv[]) {
     debug_print("Video stream opened");
     
     cv::Mat image;
-    const auto net = cv::dnn::readNet("yolov5s.onnx");  // loading YOLOv5 model
+    auto net = cv::dnn::readNet("yolov5s.onnx");  // loading YOLOv5 model
     auto detector = objdet::ObjectDetector(net);
-    detector.setNet(net);
     std::vector<objdet::Detection> det_res;
     for (EVER) {
         if (!camera.read(image)) {
@@ -67,6 +66,11 @@ int main(int argc, const char* argv[]) {
         det_res = detector.detect(image);
         
         #ifdef DEBUG
+        std::cout << det_res.size() << std::endl;
+        for (const objdet::Detection &d : det_res) {
+            cv::rectangle(image, d.box, cv::Scalar(255, 0, 0), 1, 8, 0);
+        }
+
         cv::imshow(mrl, image);
         if (cv::waitKey(1) >= 0) break;
         #endif

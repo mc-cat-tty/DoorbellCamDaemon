@@ -21,7 +21,7 @@ namespace objdet {
              * @brief Format source frame for YOLOv5 network
              * 
              * @param source image
-             * @return cv::Mat square image ready to be processed by YOLO
+             * @return cv::Mat square blob ready to be processed by YOLO
              */
             cv::Mat format_for_yolo5(const cv::Mat &source) const;
 

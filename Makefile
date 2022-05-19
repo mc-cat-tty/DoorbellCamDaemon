@@ -5,7 +5,7 @@ CXXFLAGS = -std=c++20 -Wall --pedantic -DDEBUG -DINLINE_ENABLED -I/usr/include/o
 	-lopencv_objdetect -lopencv_stitching -lopencv_dnn
 EXEC = dcd
 OBJ = main.o fsm_manager/fsm_manager.o object_detection/object_detection.o
-SHELL := /bin/bash
+SHELL = /bin/bash
 
 build: $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(EXEC)

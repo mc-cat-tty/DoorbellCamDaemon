@@ -1,6 +1,7 @@
 #include "object_detection.h"
 
 #include <algorithm>
+#include <iostream>  // TODO: remove
 
 using namespace objdet;
 
@@ -15,6 +16,7 @@ static const float YOLO_WIDTH_F = 640.;
 static const float YOLO_HEIGHT_F = 640.;
 
 [[nodiscard]] cv::Mat ObjectDetector::format_for_yolo5(const cv::Mat &source) const {
+    std::cout << "format" << std::endl;
     int rows = source.rows;
     int cols = source.cols;
     int max_dim = std::max(rows, cols);
@@ -28,6 +30,7 @@ static const float YOLO_HEIGHT_F = 640.;
 }
 
 [[nodiscard]] std::tuple<std::vector<int>, std::vector<float>, std::vector<cv::Rect>> ObjectDetector::unwrap_yolo5_result(const cv::Mat &img, const std::vector<cv::Mat> &predictions, float score_threshold) const {
+    std::cout << "unwrap_yolo5_result" << std::endl;
     const float x_factor = img.cols / YOLO_WIDTH_F;
     const float y_factor = img.rows / YOLO_HEIGHT_F;
     float *data = (float*) predictions[0].data;
@@ -68,17 +71,23 @@ static const float YOLO_HEIGHT_F = 640.;
 }
 
 [[nodiscard]] std::vector<int> ObjectDetector::filter_bounding_boxes(const std::vector<cv::Rect> &boxes, const std::vector<float> &confidences, float score_threshold, float nms_threshold) const {
+    std::cout << "filter bounding boxes" << std::endl;
     std::vector<int> result;
     cv::dnn::NMSBoxes(boxes, confidences, score_threshold, nms_threshold, result);
     return result;
 }
 
 [[nodiscard]] std::vector<Detection> ObjectDetector::detect(const cv::Mat &frame) const {
-    auto square_frame = format_for_yolo5(frame);
+    std::cout << "detect" << std::endl;
+    auto square_blob = format_for_yolo5(frame);
+    std::cout << "return format" << std::endl;
 
     std::vector<cv::Mat> predictions;
     auto net_copy = this->net;
-    net_copy.forward(predictions, net.getUnconnectedOutLayersNames());
+    net_copy.setInput(square_blob);
+    std::cout << "forwarding" << std::endl;
+    net_copy.forward(predictions, net_copy.getUnconnectedOutLayersNames());
+    std::cout << "forwarded" << std::endl;
 
     auto [class_ids, confidences, bounding_boxes] = unwrap_yolo5_result(frame, predictions, .25);
 
