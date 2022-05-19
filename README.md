@@ -18,7 +18,7 @@ TODO
 ```bash
 make gendep && make
 make clean  # optional
-./dcd CAMERA_IP_ADDRESS CAMERA_PORT MQTT_SERVER_ADDR MQTT_SERVER_PORT MQTT_TOPIC
+make run
 ```
 
 ## Environment configuration
