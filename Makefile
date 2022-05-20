@@ -7,7 +7,7 @@ CXXFLAGS = -std=c++20 -Wall --pedantic -I/usr/include/opencv4 \
 	# -DTESTING \
 	-DINLINE_ENABLED
 EXEC = dcd
-OBJ = main.o fsm_manager/fsm_manager.o object_detection/object_detection.o
+OBJ = main.o fsm_manager/fsm_manager.o object_detection/object_detection.o node/node.o
 SHELL = /bin/bash
 
 build: $(OBJ)

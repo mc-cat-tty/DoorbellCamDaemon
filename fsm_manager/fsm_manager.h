@@ -14,7 +14,8 @@ namespace fsm {
             time_t person_detected_sec;  /**< number of seconds in which there is a person in camera's fov */
             unsigned int min_sec;  /**< if person_detected_sec is over this threshold, fms moves to PERSON_STILL state */
         public:
-            FsmManager(FsmManager &fm) = default;
+            FsmManager()                = default;
+            FsmManager(FsmManager &fm)  = default;
             
             /**
              * @brief Construct a new Fsm Manager object

@@ -90,6 +90,7 @@ static const float NMS_THRESHOLD = .4;
         int idx = filtered_boxes_idx[i];
         output.push_back({
             .class_id   = class_ids[idx],
+            .class_name = class_names[class_ids[idx]],
             .confidence = confidences[idx],
             .box        = bounding_boxes[idx]
         });

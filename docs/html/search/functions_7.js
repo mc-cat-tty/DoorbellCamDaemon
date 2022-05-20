@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['setcallback_0',['setCallback',['../classfsm_1_1FsmManager.html#a76768124bfccf7792df314ef93e1d5c8',1,'fsm::FsmManager']]],
-  ['setminsec_1',['setMinSec',['../classfsm_1_1FsmManager.html#a493f887e55de9e8141853e89c5a3c10c',1,'fsm::FsmManager']]],
-  ['setnet_2',['setNet',['../classobjdet_1_1ObjectDetector.html#a22a7c8eca9ec2c0d8d08177329d13e1a',1,'objdet::ObjectDetector']]]
+  ['objectdetector_0',['ObjectDetector',['../classobjdet_1_1ObjectDetector.html#a99ed24687a842c9c705696b3dd62f581',1,'objdet::ObjectDetector::ObjectDetector()=default'],['../classobjdet_1_1ObjectDetector.html#ab81e201f8f531266ef052537fabf9687',1,'objdet::ObjectDetector::ObjectDetector(ObjectDetector &amp;od)=default'],['../classobjdet_1_1ObjectDetector.html#ad6379ad5088a0ec2c68e436c9c1deae8',1,'objdet::ObjectDetector::ObjectDetector(const cv::dnn::Net &amp;n, const std::vector&lt; std::string &gt; &amp;classes)']]]
 ];

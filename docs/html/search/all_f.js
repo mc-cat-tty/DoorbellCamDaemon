@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['yolo_5fmodel_5fpath_0',['YOLO_MODEL_PATH',['../main_8cpp.html#ad7304a9832110e440e27e7390884a269',1,'main.cpp']]]
+  ['waiting_5fperson_0',['WAITING_PERSON',['../namespacefsm.html#ae4d586c601aff4bb6f076619a35430eda53c57181481f56b0ebd71d26a93350bd',1,'fsm']]]
 ];

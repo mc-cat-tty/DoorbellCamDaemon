@@ -1,7 +1,5 @@
 #include "fsm_manager.h"
 
-#include <iostream>
-
 using namespace fsm;
 
 #ifndef INLINE_ENABLED
@@ -20,7 +18,6 @@ State FsmManager::nextState(bool person_in_frame) {
             // else stay in WAITING_PERSON state
             break;
         case State::PERSON_DETECTED:
-            std::cout << time(NULL)-person_detected_sec << std::endl;
             if (person_in_frame && time(NULL)-person_detected_sec >= min_sec)
                 this->current_state = State::PERSON_STILL;
             else if (!person_in_frame)

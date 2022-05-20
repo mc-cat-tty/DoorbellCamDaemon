@@ -1,16 +1,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <set>
 #include <fmt/core.h>
 
 #include <opencv2/opencv.hpp>
-#include <unistd.h>
 
 #include "fsm_manager/fsm_manager.h"
 #include "fsm_manager/states.h"
 #include "object_detection/object_detection.h"
-
-#define EVER ;;
+#include "node/node.h"
 
 const int min_argc_num = 5;  /**< minimum number of arguments that must be passed to the program */
 const char* YOLO_MODEL_PATH = "config_files/yolov5m6.onnx";  /**< path of yolov5m6.onnx file */
@@ -63,7 +62,7 @@ int main(int argc, const char* argv[]) {
 
     const std::string mrl = fmt::format("rtsp://{}:{}@{}:{} !max-buffers=1 !drop=true", username, password, cam_ip, cam_port);
     debug_print(mrl.c_str());
-    #else
+    #else  // open vcap from local sample file
     if (argc < 2) {
         std::cerr << "Wrong number of arguments" << std::endl;
         return 1;
@@ -75,7 +74,7 @@ int main(int argc, const char* argv[]) {
     std::ifstream in(CLASS_NAMES_PATH);
     if (!in) {
         std::cerr << "Errore while opening class names file" << std::endl;
-        return 3;
+        return 2;
     }
     std::string line;
     while (getline(in, line)) {
@@ -83,54 +82,24 @@ int main(int argc, const char* argv[]) {
     }
     debug_print("class_names loaded");
 
-    cv::Mat image;
     auto net = cv::dnn::readNet(YOLO_MODEL_PATH);  // loading YOLOv5 model
     auto detector = objdet::ObjectDetector(net, class_names);
     auto fsm_manager = fsm::FsmManager(callback, 10);
-    std::vector<objdet::Detection> det_res;
-    for (EVER) {
-        cv::VideoCapture camera(mrl);
-        camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
-        if (!camera.open(mrl)) {
-            std::cerr << "Error while opening network video stream" << std::endl;
-            return 2;
-        }
-        debug_print("Video stream opened");
-
-        if (!camera.read(image)) {
-            std::cerr << "Error while reading frame" << std::endl;
-            #ifdef DEBUG
-            if (cv::waitKey(1) >= 0) break;
-            #else
-            sleep(1);
-            #endif
-            continue;
-        }
-
-        det_res = detector.detect(image);
-        bool person_in_frame = false;
-        for (const objdet::Detection &d : det_res) {
-            if (class_names[d.class_id] == "person")
-                person_in_frame = true;
-        }
-        fsm_manager.nextState(person_in_frame);
-        
-        #ifdef DEBUG
-        for (const objdet::Detection &d : det_res) {
-            cv::rectangle(image, d.box, cv::Scalar(255, 0, 0), 1, 8, 0);
-            putText(image, class_names[d.class_id], cv::Point(d.box.x, d.box.y-10), cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255, 0, 0), 1.2);
-        }
-
-        cv::imshow(mrl, image);
-        if (cv::waitKey(1) >= 0) break;
-        #else
-        usleep(500*1000);
-        #endif
-
-        camera.release();
+    std::set<std::string> triggering_classes({"person"});
+    auto event_manager = Node::getInstance()
+        .setMrl(mrl)
+        .setDetector(detector)
+        .setFsm(fsm_manager)
+        .setTriggeringClasses(triggering_classes);
+    
+    try {
+        event_manager.loop();
+    }
+    catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return 3;
     }
 
-    // TODO: update FSM
     // TODO: send MQTT message (with callback?)
     
     return 0;
