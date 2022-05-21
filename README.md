@@ -10,6 +10,7 @@ You can find the other parts of the project at:
  - opencv
  - darknet
  - YOLOv5
+ - Paho MQTT C client library: https://www.eclipse.org/paho/clients/c/
 
 ## Container
 TODO
