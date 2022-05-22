@@ -17,7 +17,7 @@ const char* YOLO_MODEL_PATH = "config_files/yolov5m6.onnx";  /**< path of yolov5
 const char* CLASS_NAMES_PATH = "config_files/classes.txt";  /**< path of classes.txt file */
 const char* MQTT_CLIENTID = "DoorbellCamPub";
 const int MQTT_QOS = 1;
-const int MQTT_RETAIN = 0;
+const int MQTT_RETAIN = 1;
 const long MQTT_TIMEOUT = 10000L;
 
 typedef struct {
