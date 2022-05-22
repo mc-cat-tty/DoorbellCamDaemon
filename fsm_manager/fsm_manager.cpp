@@ -35,7 +35,7 @@ State FsmManager::nextState(bool person_in_frame) {
     }
 
     if (this->current_state != old_state)
-        callback_function(this->current_state);
+        callback_function(this->current_state, this->callback_args);
 
     return old_state;
 }

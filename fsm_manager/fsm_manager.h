@@ -5,7 +5,7 @@
 #include "states.h"
 
 namespace fsm {
-    typedef void (*fsm_callback) (State s);
+    typedef void (*fsm_callback) (State s, const void *args);
 
     class FsmManager {
         private:
@@ -13,6 +13,8 @@ namespace fsm {
             fsm_callback callback_function;  /**< callback_function is called every time the state of the fms changes */
             time_t person_detected_sec;  /**< number of seconds in which there is a person in camera's fov */
             unsigned int min_sec;  /**< if person_detected_sec is over this threshold, fms moves to PERSON_STILL state */
+            const void *callback_args;  /**< callback_function arguments */
+
         public:
             FsmManager()                = default;
             FsmManager(FsmManager &fm)  = default;
@@ -24,10 +26,10 @@ namespace fsm {
              * @param frm_num Minimum number of frames to consider a the subject still in front of the door
              * @param start_state Starting state of the finite state machine
              */
-            FsmManager(fsm_callback callback, unsigned int sec, State start_state = State::WAITING_PERSON)
-                : callback_function(callback), min_sec(sec), current_state(start_state) {
-                    callback_function(this->current_state);
-                };
+            FsmManager(fsm_callback callback, const void* args, unsigned int sec, State start_state = State::WAITING_PERSON)
+                : callback_function(callback), callback_args(args), min_sec(sec), current_state(start_state) {
+                    callback_function(this->current_state, this->callback_args);
+                }
             
             /**
              * @brief Set callback_function to c
@@ -35,6 +37,13 @@ namespace fsm {
              * @param c New value of callback_function
              */
             void setCallback(fsm_callback c);
+
+            /**
+             * @brief Set callback_args to args
+             * 
+             * @param args New value of callback_args
+             */
+            void setCallbackArgs(const void* args);
 
             /**
              * @brief Set min_sec to set

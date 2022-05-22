@@ -1,8 +1,8 @@
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall --pedantic -I/usr/include/opencv4 \
+CXXFLAGS = -std=c++20 -Wall --pedantic -I/usr/include/opencv4 -I/usr/include/MQTTClient.h \
 	-lfmt -lopencv_videoio -lopencv_core -lopencv_imgproc -lopencv_highgui \
 	-lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d \
-	-lopencv_objdetect -lopencv_stitching -lopencv_dnn \
+	-lopencv_objdetect -lopencv_stitching -lopencv_dnn -lpaho-mqtt3c \
 	-DINLINE_ENABLED
 EXEC = dcd
 OBJ = main.o fsm_manager/fsm_manager.o object_detection/object_detection.o node/node.o
@@ -16,7 +16,7 @@ build: $(OBJ)
 
 .PHONY: run clean cleanall gendep gendoc loadconf
 run:
-	./$(EXEC) ${CAM_IP} ${CAM_PORT} ${USER} ${PASS}
+	./$(EXEC) ${CAM_IP} ${CAM_PORT} ${USER} ${PASS} ${MQTT_ADDR} ${MQTT_TOPIC}
 
 clean:
 	rm -rf $(OBJ)
