@@ -16,8 +16,8 @@ const int min_argc_num = 7;  /**< minimum number of arguments that must be passe
 const char* YOLO_MODEL_PATH = "config_files/yolov5m6.onnx";  /**< path of yolov5m6.onnx file */
 const char* CLASS_NAMES_PATH = "config_files/classes.txt";  /**< path of classes.txt file */
 const char* MQTT_CLIENTID = "DoorbellCamPub";
-const int MQTT_QOS = 2;
-const int MQTT_RETAIN = 0;
+const int MQTT_QOS = 1;
+const int MQTT_RETAIN = 1;
 const long MQTT_TIMEOUT = 10000L;
 
 typedef struct {
@@ -124,7 +124,7 @@ int main(int argc, const char* argv[]) {
     MQTTClient_connectOptions mqtt_opts = MQTTClient_connectOptions_initializer;
     mqtt_opts.keepAliveInterval = 30;
     mqtt_opts.cleansession = 1;
-    MQTTClient_create(&mqtt_client, mqtt_addr, MQTT_CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
+    MQTTClient_create(&mqtt_client, mqtt_addr, MQTT_CLIENTID, MQTTCLIENT_PERSISTENCE_DEFAULT, NULL);
     if (MQTTClient_connect(mqtt_client, &mqtt_opts) != MQTTCLIENT_SUCCESS) {
         std::cerr << "Error while opening MQTT connection to " << mqtt_addr << std::endl;
         return 3;
