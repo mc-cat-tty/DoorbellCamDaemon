@@ -67,7 +67,6 @@ void callback(fsm::State s, const void* args) {
     mqtt_msg.payloadlen = strlen(payload);
     MQTTClient_publishMessage(mqtt_client, mqtt_topic, &mqtt_msg, NULL);
     MQTTClient_waitForCompletion(mqtt_client, NULL, MQTT_TIMEOUT);
-    MQTTClient_disconnect(mqtt_client, MQTT_TIMEOUT);
 }
 
 int main(int argc, const char* argv[]) {
@@ -131,7 +130,7 @@ int main(int argc, const char* argv[]) {
         .mqtt_client = mqtt_client,
         .mqtt_topic = mqtt_topic
     };
-    auto fsm_manager = fsm::FsmManager(callback, (void*) &callback_arg, 10);
+    auto fsm_manager = fsm::FsmManager(callback, (void*) &callback_arg, 5);
     std::set<std::string> triggering_classes({"person"});
     auto event_manager = Node::getInstance()
         .setMrl(mrl)
@@ -143,6 +142,8 @@ int main(int argc, const char* argv[]) {
         event_manager.loop();
     }
     catch (std::exception &e) {
+        MQTTClient_disconnect(mqtt_client, MQTT_TIMEOUT);
+        MQTTClient_destroy(&mqtt_client);
         std::cerr << e.what() << std::endl;
         return 4;
     }
