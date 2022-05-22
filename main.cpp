@@ -16,8 +16,8 @@ const int min_argc_num = 7;  /**< minimum number of arguments that must be passe
 const char* YOLO_MODEL_PATH = "config_files/yolov5m6.onnx";  /**< path of yolov5m6.onnx file */
 const char* CLASS_NAMES_PATH = "config_files/classes.txt";  /**< path of classes.txt file */
 const char* MQTT_CLIENTID = "DoorbellCamPub";
-const int MQTT_QOS = 1;
-const int MQTT_RETAIN = 1;
+const int MQTT_QOS = 2;
+const int MQTT_RETAIN = 0;
 const long MQTT_TIMEOUT = 10000L;
 
 typedef struct {
@@ -43,6 +43,7 @@ void callback(fsm::State s, const void* args) {
     MQTTClient_message mqtt_msg = MQTTClient_message_initializer;
     mqtt_msg.retained = MQTT_RETAIN;
     mqtt_msg.qos = MQTT_QOS;
+    MQTTClient_deliveryToken token;
     
     char payload[64];
     switch (s) {
@@ -65,8 +66,14 @@ void callback(fsm::State s, const void* args) {
 
     mqtt_msg.payload = payload;
     mqtt_msg.payloadlen = strlen(payload);
-    MQTTClient_publishMessage(mqtt_client, mqtt_topic, &mqtt_msg, NULL);
-    MQTTClient_waitForCompletion(mqtt_client, NULL, MQTT_TIMEOUT);
+    if (MQTTClient_publishMessage(mqtt_client, mqtt_topic, &mqtt_msg, &token) != MQTTCLIENT_SUCCESS) {
+        std::cerr << "Error while publishing MQTT message" << std::endl;
+        return;
+    }
+
+    if (MQTTClient_waitForCompletion(mqtt_client, token, MQTT_TIMEOUT) != MQTTCLIENT_SUCCESS) {
+        std::cerr << "Error while waiting for completion of MQTT message" << std::endl;
+    }
 }
 
 int main(int argc, const char* argv[]) {
