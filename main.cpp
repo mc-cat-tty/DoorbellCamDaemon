@@ -49,20 +49,17 @@ void callback(fsm::State s, const void* args) {
     switch (s) {
         case fsm::State::WAITING_PERSON:
             strcpy(payload, "WAITING_PERSON");
-            debug_print("WAITING_PERSON");
             break;
         case fsm::State::PERSON_DETECTED:
             strcpy(payload, "PERSON_DETECTED");
-            debug_print("PERSON_DETECTED");
             break;
         case fsm::State::PERSON_STILL:
             strcpy(payload, "PERSON_STILL");
-            debug_print("PERSON_STILL");
             break;
         default:
             strcpy(payload, "UNKNOWN");
-            debug_print("UNKNOWN");
     }
+    debug_print(payload);
 
     mqtt_msg.payload = payload;
     mqtt_msg.payloadlen = strlen(payload);
