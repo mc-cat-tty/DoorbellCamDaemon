@@ -14,7 +14,7 @@ build: $(OBJ)
 -include depedencies.txt
 -include params.conf
 
-.PHONY: run clean cleanall gendep gendoc loadconf
+.PHONY: run clean cleanall gendep gendoc install run_container
 run:
 	./$(EXEC) ${CAM_IP} ${CAM_PORT} ${USER} ${PASS} ${MQTT_ADDR} ${MQTT_TOPIC}
 
@@ -29,3 +29,11 @@ gendep:
 
 gendoc:
 	doxygen
+
+install:
+	ln -s doorbellcam.service /etc/systemd/system/
+	systemctl start doorbellcam
+	systemctl enable doorbellcam
+
+run_container:
+	./$(EXEC) ${CAM_IP_ENV} ${CAM_PORT_ENV} ${USER_ENV} ${PASS_ENV} ${MQTT_ADDR_ENV} ${MQTT_TOPIC_ENV}

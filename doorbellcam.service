@@ -1,0 +1,16 @@
+[Unit]
+Description=DoorbellCam service
+After=network-online.target
+StartLimitBurst=10
+StartLimitIntervalSec=60
+StartLimitAction=reboot
+
+[Service]
+Type=exec
+Restart=always
+RestartSec=2
+User=root
+ExecStart=cd /root/home/DoorbellCamDaemon/ && make run_container
+
+[Install]
+WantedBy=multi-user.target

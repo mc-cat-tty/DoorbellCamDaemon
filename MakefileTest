@@ -16,7 +16,7 @@ build: $(OBJ)
 -include depedencies.txt
 -include params.conf
 
-.PHONY: clean cleanall gendep gendoc loadconf test
+.PHONY: clean cleanall gendep gendoc test
 test:  # compile with TESTING macro before using this target
 	./$(EXEC) samples/street.mp4
 

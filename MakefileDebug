@@ -15,7 +15,7 @@ build: $(OBJ)
 -include depedencies.txt
 -include params.conf
 
-.PHONY: run clean cleanall gendep gendoc loadconf
+.PHONY: run clean cleanall gendep gendoc
 run:
 	./$(EXEC) ${CAM_IP} ${CAM_PORT} ${USER} ${PASS} ${MQTT_ADDR} ${MQTT_TOPIC}
 
