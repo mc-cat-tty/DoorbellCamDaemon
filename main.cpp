@@ -77,7 +77,7 @@ int main(int argc, const char* argv[]) {
     #ifndef TESTING
     if (argc < min_argc_num) {
         std::cerr << "Wrong arguments" << std::endl;
-        std::cerr << "Usage: " << argv[0] << " CAM_IP CAM_PORT USERNAME PASSWORD" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " CAM_IP CAM_PORT USERNAME PASSWORD MQTT_ADDR MQTT_TOPIC" << std::endl;
         return 1;
     }
 
