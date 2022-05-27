@@ -13,7 +13,7 @@ static const unsigned MAX_NOT_READ_FRAME = 10;
     unsigned not_read_frames = 0;
 
     for (EVER) {
-        cv::VideoCapture camera(mrl);
+        cv::VideoCapture camera(mrl, cv::CAP_GSTREAMER);
         camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
         if (!camera.open(mrl))
             throw std::runtime_error("Error while opening network video stream");
