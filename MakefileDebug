@@ -2,6 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++20 -Wall --pedantic \
 	-I/usr/include/opencv4 -I/usr/include/MQTTClient.h \
 	-I/usr/local/include/opencv4 -I/usr/local/include/MQTTClient.h \
+	-I/usr/include/gstreamer-1.0 -I/usr/include/x86_64-linux-gnu \
+	-I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include \
 	-DDEBUG \
 	-DINLINE_ENABLED
 LDFLAGS = -L/usr/lib/ -L/usr/lib/opencv4/3rdparty/ \
@@ -11,7 +13,8 @@ LDLIBS = -lfmt -lpaho-mqtt3c \
 	-lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d \
 	-lopencv_objdetect -lopencv_stitching -lopencv_dnn  \
 	-lopencv_gapi -lopencv_photo -lopencv_flann -lopencv_imgcodecs \
-	-ljpeg -lpng -ltiff -lz -ldl -lm -lpthread -lrt
+	-ljpeg -lpng -ltiff -lz -ldl -lm -lpthread -lrt \
+	-lgstreamer-1.0 -lgobject-2.0 -lglib-2.0
 EXEC = dcd
 OBJ = main.o fsm_manager/fsm_manager.o object_detection/object_detection.o node/node.o
 SHELL = /bin/bash

@@ -22,9 +22,10 @@ You can find the other parts of the project at:
     ```bash
     docker build -t doorbellcam .
     ```
- 3. Run the image setting environment varibles
+ 3. Set environment variables by editing _env.list_ file
+ 4. Run the image
     ```bash
-    docker run .... -e ....
+    docker run --restart always --env-file env.list --net=host doorbellcam
     ```
 
 ## Environment configuration

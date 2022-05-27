@@ -13,7 +13,7 @@
 #include "node/node.h"
 
 const int min_argc_num = 7;  /**< minimum number of arguments that must be passed to the program */
-const char* YOLO_MODEL_PATH = "config_files/yolov5s.onnx";  /**< path of yolov5m6.onnx file */
+const char* YOLO_MODEL_PATH = "config_files/yolov5m6.onnx";  /**< path of yolov5m6.onnx file */
 const char* CLASS_NAMES_PATH = "config_files/classes.txt";  /**< path of classes.txt file */
 const char* MQTT_CLIENTID = "DoorbellCamPub";
 const int MQTT_QOS = 1;
@@ -64,7 +64,8 @@ void callback(fsm::State s, const void* args) {
     mqtt_msg.payload = payload;
     mqtt_msg.payloadlen = strlen(payload);
     if (MQTTClient_publishMessage(mqtt_client, mqtt_topic, &mqtt_msg, &token) != MQTTCLIENT_SUCCESS) {
-        std::cerr << "Error while publishing MQTT message" << std::endl;
+        // std::cerr << "Error while publishing MQTT message" << std::endl;
+        throw std::runtime_error("Error while publishing MQTT message");  // Keepalive time probably reached
         return;
     }
 
@@ -95,7 +96,7 @@ int main(int argc, const char* argv[]) {
     debug_print(mqtt_addr);
     debug_print(mqtt_topic);
 
-    const std::string mrl = fmt::format("rtspsrc location=rtsp://{}:{}@{}:{} latency=0 ! queue ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink", username, password, cam_ip, cam_port);
+    const std::string mrl = fmt::format("rtspsrc location=rtsp://{}:{}@{}:{}/h264 latency=0 ! queue ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink", username, password, cam_ip, cam_port);
     debug_print(mrl.c_str());
     #else  // open vcap from local sample file
     if (argc < 2) {
@@ -119,7 +120,7 @@ int main(int argc, const char* argv[]) {
 
     MQTTClient mqtt_client;
     MQTTClient_connectOptions mqtt_opts = MQTTClient_connectOptions_initializer;
-    mqtt_opts.keepAliveInterval = 30;
+    mqtt_opts.keepAliveInterval = 64800;  // 18 hours
     mqtt_opts.cleansession = 1;
     MQTTClient_create(&mqtt_client, mqtt_addr, MQTT_CLIENTID, MQTTCLIENT_PERSISTENCE_DEFAULT, NULL);
     if (MQTTClient_connect(mqtt_client, &mqtt_opts) != MQTTCLIENT_SUCCESS) {
