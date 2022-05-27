@@ -1,15 +1,22 @@
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall --pedantic -I/usr/include/opencv4 -I/usr/include/MQTTClient.h \
-	-lfmt -lopencv_videoio -lopencv_core -lopencv_imgproc -lopencv_highgui \
-	-lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d \
-	-lopencv_objdetect -lopencv_stitching -lopencv_dnn -lpaho-mqtt3c \
+CXXFLAGS = -std=c++20 -Wall --pedantic \
+	-I/usr/include/opencv4 -I/usr/include/MQTTClient.h \
+	-I/usr/local/include/opencv4 -I/usr/local/include/MQTTClient.h \
 	-DINLINE_ENABLED
+LDFLAGS = -L/usr/lib/ -L/usr/lib/opencv4/3rdparty/ \
+	-L/usr/local/lib/ -L/usr/local/lib/opencv4/3rdparty/
+LDLIBS = -lfmt -lpaho-mqtt3c \
+	-lopencv_videoio -lopencv_core -lopencv_imgproc -lopencv_highgui \
+	-lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d \
+	-lopencv_objdetect -lopencv_stitching -lopencv_dnn  \
+	-lopencv_gapi -lopencv_photo -lopencv_flann -lopencv_imgcodecs \
+	-ljpeg -lpng -ltiff -lz -ldl -lm -lpthread -lrt
 EXEC = dcd
 OBJ = main.o fsm_manager/fsm_manager.o object_detection/object_detection.o node/node.o
 SHELL = /bin/bash
 
 build: $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) -o $(EXEC)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJ) -o $(EXEC) $(LDLIBS)
 
 -include depedencies.txt
 -include params.conf

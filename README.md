@@ -13,7 +13,19 @@ You can find the other parts of the project at:
  - Paho MQTT C client library: https://www.eclipse.org/paho/clients/c/
 
 ## Container
-TODO
+ 1. Clone this repository
+    ```bash
+    git clone https://github.com/mc-cat-tty/DoorbellCamDaemon
+    cd DoorbellCamDaemon/
+    ```
+ 2. Build the image
+    ```bash
+    docker build -t doorbellcam .
+    ```
+ 3. Run the image setting environment varibles
+    ```bash
+    docker run .... -e ....
+    ```
 
 ## Environment configuration
  1. Populate the file named _params.conf_
