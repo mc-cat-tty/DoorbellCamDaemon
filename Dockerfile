@@ -54,6 +54,6 @@ RUN apt-get update && apt-get install -y g++ make libfmt-dev
 
 WORKDIR /root/home/DoorbellCamDaemon/
 COPY . .
-RUN make clean && make gendep && make -f MakefileDebug
+RUN make clean && make gendep && make
 
 ENTRYPOINT ["make", "run_container"]
