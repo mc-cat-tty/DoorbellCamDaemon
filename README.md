@@ -28,6 +28,8 @@ You can find the other parts of the project at:
     docker run --restart always --env-file env.list --net=host doorbellcam
     ```
 
+You can find a pre-build version of the image at: https://hub.docker.com/repository/docker/francescomecatti/doorbellcam
+
 ## Environment configuration
  1. Populate the file named _params.conf_
  4. To execute the software use `make run` command
