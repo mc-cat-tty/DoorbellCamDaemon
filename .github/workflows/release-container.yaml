@@ -1,0 +1,20 @@
+name: release-container
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  build-container:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout-repo
+        uses: actions/checkout@v3
+
+      - name: log-into-docker-hub
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: build-container
+        run: docker build -t francescomecatti/doorbellcam:latest .
+
+      - name: push-image
+        run: docker push francescomecatti/doorbellcam:latest
