@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: checkout-repo
         uses: actions/checkout@v3
+      - run: git fetch --prune --unshallow
 
       - name: log-into-docker-hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
