@@ -17,8 +17,8 @@ jobs:
       - name: print tag
         run: echo "$(git describe --tags --abbrev=0)"
 
-      # - name: build-container
-      #   run: docker build -t francescomecatti/doorbellcam:${GITHUB_REF##*/} .
+      - name: build-container
+        run: docker build -t francescomecatti/doorbellcam:$(git describe --tags --abbrev=0) .
 
-      # - name: push-image
-      #   run: docker push francescomecatti/doorbellcam:${GITHUB_REF##*/}
+      - name: push-image
+        run: docker push francescomecatti/doorbellcam:$(git describe --tags --abbrev=0)
