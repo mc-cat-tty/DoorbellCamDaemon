@@ -12,9 +12,12 @@ jobs:
 
       - name: log-into-docker-hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      
+      - name: print tag
+        run: echo "${GITHUB_REF#refs/*/}"
 
-      - name: build-container
-        run: docker build -t francescomecatti/doorbellcam:${GITHUB_REF##*/} .
+      # - name: build-container
+      #   run: docker build -t francescomecatti/doorbellcam:${GITHUB_REF##*/} .
 
-      - name: push-image
-        run: docker push francescomecatti/doorbellcam:${GITHUB_REF##*/}
+      # - name: push-image
+      #   run: docker push francescomecatti/doorbellcam:${GITHUB_REF##*/}
