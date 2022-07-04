@@ -96,7 +96,7 @@ int main(int argc, const char* argv[]) {
     debug_print(mqtt_addr);
     debug_print(mqtt_topic);
 
-    const std::string mrl = fmt::format("rtspsrc location=rtsp://{}:{}@{}:{}/h264 latency=0 ! queue ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink", username, password, cam_ip, cam_port);
+    const std::string mrl = fmt::format("rtspsrc location=rtsp://{}:{}@{}:{}/h264 latency=0 ! queue ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink drop=1", username, password, cam_ip, cam_port);
     debug_print(mrl.c_str());
     #else  // open vcap from local sample file
     if (argc < 2) {
