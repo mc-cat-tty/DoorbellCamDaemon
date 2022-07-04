@@ -57,3 +57,4 @@ COPY . .
 RUN make clean && make gendep && make
 
 ENTRYPOINT ["make", "run_container"]
+
