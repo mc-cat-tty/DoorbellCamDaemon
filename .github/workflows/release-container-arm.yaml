@@ -1,4 +1,4 @@
-name: release-container
+name: release-container-arm
 on:
   push:
     branches:
