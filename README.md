@@ -28,7 +28,9 @@ You can find the other parts of the project at:
     docker run --restart always --env-file env.list --net=host doorbellcam
     ```
 
-You can find a pre-built version of the image at: https://hub.docker.com/repository/docker/francescomecatti/doorbellcam
+You can find a pre-built version of the image at:
+ - amd64: https://hub.docker.com/repository/docker/francescomecatti/doorbellcam
+ - arm64: https://hub.docker.com/repository/docker/francescomecatti/doorbellcam-arm
 
 ## Development environment configuration
  1. Populate the file named _params.conf_
