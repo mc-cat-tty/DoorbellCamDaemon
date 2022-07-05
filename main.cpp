@@ -13,7 +13,7 @@
 #include "node/node.h"
 
 const int min_argc_num = 7;  /**< minimum number of arguments that must be passed to the program */
-const char* YOLO_MODEL_PATH = "config_files/yolov5s.onnx";  /**< path of yolov5m6.onnx file */
+const char* YOLO_MODEL_PATH = "config_files/yolov5s.onnx";  /**< path of model file */
 const char* CLASS_NAMES_PATH = "config_files/classes.txt";  /**< path of classes.txt file */
 const char* MQTT_CLIENTID = "DoorbellCamPub";
 const int MQTT_QOS = 1;
@@ -96,7 +96,7 @@ int main(int argc, const char* argv[]) {
     debug_print(mqtt_addr);
     debug_print(mqtt_topic);
 
-    const std::string mrl = fmt::format("rtspsrc location=rtsp://{}:{}@{}:{}/h264 latency=0 ! queue ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink drop=1", username, password, cam_ip, cam_port);
+    const std::string mrl = fmt::format("rtsp://{}:{}@{}:{} !max-buffers=1 !drop=true", username, password, cam_ip, cam_port);
     debug_print(mrl.c_str());
     #else  // open vcap from local sample file
     if (argc < 2) {

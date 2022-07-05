@@ -13,7 +13,7 @@ static const unsigned MAX_NOT_READ_FRAME = 10;
     unsigned not_read_frames = 0;
 
     for (EVER) {
-        cv::VideoCapture camera(mrl, cv::CAP_GSTREAMER);
+        cv::VideoCapture camera(mrl);
         camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
         if (!camera.open(mrl))
             throw std::runtime_error("Error while opening network video stream");
@@ -40,6 +40,7 @@ static const unsigned MAX_NOT_READ_FRAME = 10;
         det_res = detector.detect(image);
         bool person_in_frame = false;
         for (const objdet::Detection &d : det_res) {
+            std::cout << d.class_name << " " << d.confidence << std::endl;
             if (triggers.find(d.class_name) != triggers.end())
                 person_in_frame = true;
         }
@@ -54,7 +55,7 @@ static const unsigned MAX_NOT_READ_FRAME = 10;
         cv::imshow(mrl, image);
         if (cv::waitKey(1) >= 0) break;
         #else
-        usleep(500*1000);  // 0.5 sec
+        usleep(50*1000);  // 0.5 sec
         #endif
 
         camera.release();

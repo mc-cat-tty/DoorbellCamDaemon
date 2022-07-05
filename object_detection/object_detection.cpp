@@ -12,8 +12,8 @@ using namespace objdet;
 static const float YOLO_WIDTH = 640.;
 static const float YOLO_HEIGHT = 640.;
 static const float CONFIDENCE_THRESHOLD = .8;
-static const float SCORE_THRESHOLD = .2;
-static const float NMS_THRESHOLD = .4;
+static const float SCORE_THRESHOLD = .8;
+static const float NMS_THRESHOLD = .5;
 
 [[nodiscard]] cv::Mat ObjectDetector::format_for_yolo5(const cv::Mat &source) const {
     int rows = source.rows;
