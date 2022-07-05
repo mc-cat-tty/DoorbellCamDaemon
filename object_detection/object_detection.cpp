@@ -23,7 +23,7 @@ static const float NMS_THRESHOLD = .5;
     source.copyTo(resized(cv::Rect(0, 0, cols, rows)));
 
     cv::Mat res;
-    cv::dnn::blobFromImage(resized, res, 1./255., cv::Size(YOLO_WIDTH, YOLO_HEIGHT), cv::Scalar(), true, false);
+    cv::dnn::blobFromImage(resized, res, 1./255., cv::Size(YOLO_WIDTH, YOLO_HEIGHT), cv::Scalar(0, 0, 0), true, false);
     return res;
 }
 
@@ -82,7 +82,7 @@ static const float NMS_THRESHOLD = .5;
     net_copy.forward(predictions, net_copy.getUnconnectedOutLayersNames());
 
     auto [class_ids, confidences, bounding_boxes] = unwrap_yolo5_result(frame, predictions, class_names, CONFIDENCE_THRESHOLD, SCORE_THRESHOLD);
-
+    
     auto filtered_boxes_idx = filter_bounding_boxes(bounding_boxes, confidences, SCORE_THRESHOLD, NMS_THRESHOLD);
 
     std::vector<Detection> output;

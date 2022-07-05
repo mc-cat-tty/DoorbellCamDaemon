@@ -13,7 +13,7 @@
 #include "node/node.h"
 
 const int min_argc_num = 7;  /**< minimum number of arguments that must be passed to the program */
-const char* YOLO_MODEL_PATH = "config_files/yolov5s.onnx";  /**< path of model file */
+const char* YOLO_MODEL_PATH = "config_files/yolov5s6.onnx";  /**< path of model file */
 const char* CLASS_NAMES_PATH = "config_files/classes.txt";  /**< path of classes.txt file */
 const char* MQTT_CLIENTID = "DoorbellCamPub";
 const int MQTT_QOS = 1;
