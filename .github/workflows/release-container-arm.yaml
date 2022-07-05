@@ -2,7 +2,7 @@ name: release-container-arm
 on:
   push:
     branches:
-      - 'main'
+      - 'arm'
 jobs:
   build-container:
     runs-on: ubuntu-latest
