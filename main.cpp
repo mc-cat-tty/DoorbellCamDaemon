@@ -135,7 +135,7 @@ int main(int argc, const char* argv[]) {
         .mqtt_client = mqtt_client,
         .mqtt_topic = mqtt_topic
     };
-    auto fsm_manager = fsm::FsmManager(callback, (void*) &callback_arg, 5);
+    auto fsm_manager = fsm::FsmManager(callback, (void*) &callback_arg, 3);
     std::set<std::string> triggering_classes({"person"});
     auto event_manager = Node::getInstance()
         .setMrl(mrl)
