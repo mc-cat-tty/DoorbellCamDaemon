@@ -7,16 +7,17 @@ using namespace fsm;
 #include "fsm_manager.ipp"
 #endif
 
+
 State FsmManager::nextState(bool person_in_frame) {
     State old_state = this->current_state;
 
     switch (current_state) {
         case State::WAITING_PERSON:
-            this->person_detected_sec = time(NULL);
             if (person_in_frame && time(NULL)-person_detected_sec < min_sec)
                 this->current_state = State::PERSON_DETECTED;
             else if (person_in_frame && time(NULL)-person_detected_sec >= min_sec)
                 this->current_state = State::PERSON_STILL;
+            this->person_detected_sec = time(NULL);
             break;
         case State::PERSON_DETECTED:
             if (person_in_frame && time(NULL)-person_detected_sec >= min_sec)

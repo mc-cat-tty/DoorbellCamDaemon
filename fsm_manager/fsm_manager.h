@@ -27,7 +27,7 @@ namespace fsm {
              * @param start_state Starting state of the finite state machine
              */
             FsmManager(fsm_callback callback, const void* args, unsigned int sec, State start_state = State::WAITING_PERSON)
-                : callback_function(callback), callback_args(args), min_sec(sec), current_state(start_state) {
+                : callback_function(callback), callback_args(args), min_sec(sec), current_state(start_state), person_detected_sec(time(NULL)) {
                     callback_function(this->current_state, this->callback_args);
                 }
             
