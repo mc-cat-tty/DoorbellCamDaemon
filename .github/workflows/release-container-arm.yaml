@@ -17,14 +17,23 @@ jobs:
       - name: print tag
         run: echo "$(git describe --tags --abbrev=0)"
 
-      - name: build-container-push-image
+      - name: enable experimental cli
         run: export DOCKER_CLI_EXPERIMENTAL=enabled
-        run: docker run --rm --privileged docker/binfmt:66f9012c56a8316f9244ffd7622d7c21c1f6f28d
-        run: docker pull tonistiigi/binfmt:latest
-        run: docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-arm
-        run: docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-aarch64
-        run: docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-ppc64le
-        run: docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-s390x
+      
+      - name: pull binfmt
+        run: docker run --rm --privileged docker/binfmt:66f9012c56a8316f9244ffd7622d7c21c1f6f28d && docker pull tonistiigi/binfmt:latest
+
+      - name: uninstall all
+        run: docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-arm && \
+          docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-aarch64 && \
+          docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-ppc64le && \
+          docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-s390x
+      
+      - name: install all
         run: docker run --privileged --rm tonistiigi/binfmt --install all
+      
+      - name: create builder
         run: docker buildx create --use --name multi-arch-builder
+
+      - name: build and push
         run: docker buildx build --platform linux/arm64 -t francescomecatti/doorbellcam-arm:v2.0 --push .
