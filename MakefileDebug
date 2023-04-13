@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall --pedantic \
+CXXFLAGS = -g -std=c++20 -Wall --pedantic \
 	-I/usr/include/opencv4 -I/usr/include/MQTTClient.h \
 	-I/usr/local/include/opencv4 -I/usr/local/include/MQTTClient.h \
 	-I/usr/include/gstreamer-1.0 -I/usr/include/x86_64-linux-gnu \
