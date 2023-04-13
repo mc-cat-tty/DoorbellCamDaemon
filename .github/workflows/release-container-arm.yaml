@@ -1,6 +1,8 @@
 name: release-container-arm
 on:
   push:
+    branches-ignore:
+      - 'main'
     tags:
       - 'v*'
 
