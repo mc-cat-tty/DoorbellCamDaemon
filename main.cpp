@@ -130,6 +130,8 @@ int main(int argc, const char* argv[]) {
     debug_print("MQTTClient object created and initialized");
 
     auto net = cv::dnn::readNet(YOLO_MODEL_PATH);  // loading YOLOv5 model
+    net.enableWinograd(false);
+
     auto detector = objdet::ObjectDetector(net, class_names);
     callback_arg_t callback_arg = {
         .mqtt_client = mqtt_client,
